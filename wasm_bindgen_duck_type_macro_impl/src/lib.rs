@@ -13,6 +13,7 @@ pub fn wasm_bindgen_duck_type(_attr: TokenStream, item: TokenStream) -> TokenStr
 
 fn impl_duck_type(item_struct: &syn::ItemStruct) -> TokenStream {
     let name = &item_struct.ident;
+    let vis = &item_struct.vis;
     let feilds = &item_struct.fields;
     if let syn::Fields::Named(feilds) = feilds {
         let feilds = feilds.named.iter().map(|x| {
@@ -23,16 +24,16 @@ fn impl_duck_type(item_struct: &syn::ItemStruct) -> TokenStream {
 
             quote! {
                 #[::wasm_bindgen::prelude::wasm_bindgen(method, getter)]
-                pub fn #f_name(this: &#name) -> #f_type;
+                #vis fn #f_name(this: &#name) -> #f_type;
                 #[::wasm_bindgen::prelude::wasm_bindgen(method, setter)]
-                pub fn #f_setter_name(this: &#name, val: #f_type);
+                #vis fn #f_setter_name(this: &#name, val: #f_type);
             }
         });
 
         let gen = quote! {
             #[::wasm_bindgen::prelude::wasm_bindgen(method, getter)]
             extern "C" {
-                pub type #name;
+                #vis type #name;
 
                 #(#feilds)*
             }
