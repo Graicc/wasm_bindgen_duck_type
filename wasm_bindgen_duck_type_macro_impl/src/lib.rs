@@ -1,7 +1,7 @@
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
-use quote::quote;
+use quote::{format_ident, quote};
 use syn;
 
 #[proc_macro_attribute]
@@ -19,14 +19,18 @@ fn impl_duck_type(item_struct: &syn::ItemStruct) -> TokenStream {
             let f_name = x.ident.as_ref().unwrap();
             let f_type = &x.ty;
 
+            let f_setter_name = format_ident!("set_{}", f_name);
+
             quote! {
-                #[wasm_bindgen::wasm_bindgen(method, getter)]
+                #[::wasm_bindgen::prelude::wasm_bindgen(method, getter)]
                 pub fn #f_name(this: &#name) -> #f_type;
+                #[::wasm_bindgen::prelude::wasm_bindgen(method, setter)]
+                pub fn #f_setter_name(this: &#name, val: #f_type);
             }
         });
 
         let gen = quote! {
-            #[wasm_bindgen::wasm_bindgen(method, getter)]
+            #[::wasm_bindgen::prelude::wasm_bindgen(method, getter)]
             extern "C" {
                 pub type #name;
 
