@@ -1,9 +1,12 @@
+//! Implementation for [wasm_bindgen_duck_type](https://docs.rs/wasm_bindgen_duck_type)
+
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
 use quote::{format_ident, quote};
 use syn;
 
+/// Attribute macro to generate duck type interface
 #[proc_macro_attribute]
 pub fn wasm_bindgen_duck_type(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let ast = syn::parse(item).unwrap();

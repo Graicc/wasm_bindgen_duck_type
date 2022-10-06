@@ -3,6 +3,10 @@ name = "wasm_bindgen_duck_type"
 author = "Graic"
 version = "0.1.0"
 edition = "2021"
+description = "Macro to automatically generate duck type interfaces with wasm_bindgen"
+homepage = "https://github.com/Graicc/wasm_bindgen_duck_type"
+readme = "README.md"
+documentation = "https://docs.rs/wasm_bindgen_duck_type"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
