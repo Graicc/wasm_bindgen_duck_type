@@ -23,17 +23,20 @@
 //! ```
 //! 
 //! Rust:
-//! ```rust
+//! ```no_run
+//! use wasm_bindgen_duck_type::wasm_bindgen_duck_type;
+//! use wasm_bindgen::prelude::*;
+//! 
 //! #[wasm_bindgen]
 //! extern "C" {
-//!     pub fn MyFun() -> MyType;
-//!     pub fn GetNumber(input: MyType) -> i32;
+//!     fn MyFun() -> MyType;
+//!     fn GetNumber(input: MyType) -> i32;
 //! }
 //! 
 //! #[wasm_bindgen_duck_type]
 //! struct MyType {
 //!     number: i32,
-//!     fun: Function,
+//!     fun: js_sys::Function,
 //! }
 //! 
 //! fn main() {
@@ -45,7 +48,7 @@
 //!     let input = MyType::default(); // All fields are null / default
 //!     let input = MyType::new(
 //!         42,
-//!         ... // Pass a function
+//!         JsValue::NULL.into() // Pass a function
 //!     );
 //! 
 //!     let num = GetNumber(input); // 42
